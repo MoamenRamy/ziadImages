@@ -17,7 +17,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $images = Image::paginate(12);
+        $images = Image::with('category')->paginate(12);
         return $images;
     }
 
@@ -27,8 +27,8 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'image' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            // 'image' => 'required',
             'title' => 'required',
             // 'category_id' => 'required'
         ]);
@@ -42,6 +42,10 @@ class ImageController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
             $image->image = $path;
+        }
+        if ($request->hasFile('before')) {
+            $path = $request->file('before')->store('before', 'public');
+            $image->before = $path;
         }
         $image->title = $request->title;
         $image->description = $request->description;
@@ -84,6 +88,11 @@ class ImageController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
             $image->image = $path;
+        }
+
+        if ($request->hasFile('before')) {
+            $path = $request->file('before')->store('before', 'public');
+            $image->before = $path;
         }
 
         $image->title = $request->title;

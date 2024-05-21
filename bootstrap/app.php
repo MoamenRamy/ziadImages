@@ -22,11 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api(prepend: [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             EnsureFrontendRequestsAreStateful::class,
             // 'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // \App\Http\Middleware\admin::class,
+            \App\Http\Middleware\LogRequests::class,
 
         ]);
         // $middleware->use([
@@ -39,9 +38,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'ability' => CheckForAnyAbility::class,
             'admin' => admin::class,
         ]);
-
-
-        // $middleware->append(admin::class);
     })
 
     ->withExceptions(function (Exceptions $exceptions) {

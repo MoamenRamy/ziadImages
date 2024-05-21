@@ -41,14 +41,14 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): Response
+    public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        // For Sanctum
+        $request->user()->currentAccessToken()->delete();
 
-        $request->session()->invalidate();
+        // For Passport, you might use:
+        // $request->user()->token()->revoke();
 
-        $request->session()->regenerateToken();
-
-        return response()->noContent();
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }
