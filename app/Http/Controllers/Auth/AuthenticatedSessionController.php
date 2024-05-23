@@ -15,7 +15,7 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     //
-    public function store(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
         // Validate the incoming request data
         $credentials = $request->validate([

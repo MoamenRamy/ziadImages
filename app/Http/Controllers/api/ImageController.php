@@ -78,8 +78,8 @@ class ImageController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB
-            'before' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB
+            // 'before' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB
             // 'category_id' => 'required'
         ]);
 
@@ -98,7 +98,7 @@ class ImageController extends Controller
         }
 
         $image->title = $request->title;
-        $image->description = $request->title;
+        $image->description = $request->description;
         $image->alt = $request->alt;
         $image->category_id = $request->category_id;
 

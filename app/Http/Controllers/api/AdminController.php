@@ -58,6 +58,7 @@ class AdminController extends Controller
 
         $admin->name = $request->name;
         $admin->email = $request->email;
+        $admin->phone = $request->phone;
         $admin->password = $request->password;
         $admin->role = 1;
 
