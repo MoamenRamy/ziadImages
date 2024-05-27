@@ -98,6 +98,7 @@ class ImageController extends Controller
 
         $image->title = $request->title;
         $image->description = $request->description;
+        $image->description = $request->description;
         $image->alt = $request->alt;
         $image->category_id = $request->category_id;
 
