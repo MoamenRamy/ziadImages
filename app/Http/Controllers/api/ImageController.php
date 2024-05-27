@@ -34,7 +34,7 @@ class ImageController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+            return response()->json(['errors' => $validator->errors()], 403);
         }
 
         $image = new Image();
@@ -118,7 +118,11 @@ class ImageController extends Controller
 
     public function getImagesByCategory($category_id)
     {
+        $category = Category::where('id',$category_id)->first();
         $images = Image::where('category_id', $category_id)->get();
-        return $images;
+        $result = new \stdClass();
+        $result->images = $images;
+        $result->categoryName = $category->name;
+        return $result;
     }
 }

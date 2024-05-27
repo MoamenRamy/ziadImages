@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/categories', [CategoryController::class, 'index']); //test middleware
     Route::get('/category/{id}', [CategoryController::class, 'show']); //
 
+    Route::get('/imagesByCategory/{id}', [ImageController::class, 'getImagesByCategory']);
     Route::get('/images', [ImageController::class, 'index']); //
     Route::get('/image/{id}', [ImageController::class, 'show']); //
 
