@@ -12,7 +12,7 @@ Route::post('admin/register', [RegisteredUserController::class, 'store'])
                 // ->middleware('guest')
                 ->name('register');
 
-Route::post('admin/login', 'AuthenticatedSessionController@login')
+Route::post('admin/login', [AuthenticatedSessionController::class, 'login'])
                 ->middleware('guest')
                 ->name('login');
 
@@ -32,4 +32,4 @@ Route::post('admin/email/verification-notification', [EmailVerificationNotificat
                 ->middleware(['auth', 'throttle:6,1'])
                 ->name('verification.send');
 
-Route::post('admin/logout', 'AuthenticatedSessionController@logout')->middleware('auth:sanctum')->name('logout');
+Route::post('admin/logout', [AuthenticatedSessionController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
