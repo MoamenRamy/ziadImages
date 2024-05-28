@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Nette\Schema\Helpers;
@@ -86,16 +87,6 @@ class ImageController extends Controller
             return response()->json(['message' => 'validation error'], 422);
         }
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images', 'public');
-            $image->image = $path;
-        }
-
-        if ($request->hasFile('before')) {
-            $path = $request->file('before')->store('before', 'public');
-            $image->before = $path;
-        }
-
         $image->title = $request->title;
         $image->description = $request->description;
         $image->description = $request->description;
@@ -124,5 +115,38 @@ class ImageController extends Controller
         $result->images = $images;
         $result->categoryName = $category->name;
         return $result;
+    }
+
+    public function updateImages(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'image' => 'required',
+            'before' => 'required',
+        ]);
+
+        $id = $request->id;
+        $image = Image::findOrFail($id);
+
+
+        if ($request->hasFile('image')) {
+            if ($image->image) {
+                Storage::disk('public')->delete($image->image);
+            }
+            $path = $request->file('image')->store('images', 'public');
+            $image->image = $path;
+        }
+
+        if ($request->hasFile('before')) {
+            if ($image->before) {
+                Storage::disk('public')->delete($image->before);
+            }
+            $path = $request->file('before')->store('before', 'public');
+            $image->before = $path;
+        }
+
+        $image->save();
+
+        return response()->json(['message' => 'images add successfuly']);
     }
 }
