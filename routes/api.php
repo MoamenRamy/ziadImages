@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('/categories', [CategoryController::class, 'store']); //
         Route::put('/categories/{id}', [CategoryController::class, 'update']); //
         Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+        Route::post('/categories/updateImage', [CategoryController::class, 'updateImage']);
+        // Route::delete('/categories/image/delete', [CategoryController::class, 'deleteImage']);
 
         Route::post('/images', [ImageController::class, 'store']); //
         Route::put('/images/{id}', [ImageController::class, 'update']); //
