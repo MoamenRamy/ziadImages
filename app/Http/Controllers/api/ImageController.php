@@ -122,7 +122,7 @@ class ImageController extends Controller
         $request->validate([
             'id' => 'required',
             'image' => 'required',
-            'before' => 'required',
+            'before' => 'required'
         ]);
 
         $id = $request->id;
