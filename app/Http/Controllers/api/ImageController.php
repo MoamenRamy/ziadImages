@@ -21,7 +21,11 @@ class ImageController extends Controller
         $images = Image::with('category')->paginate(12);
         return $images;
     }
-
+    public function getImagesNoPaginator()
+    {
+        $images = Image::all();
+        return $images;
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -122,7 +126,7 @@ class ImageController extends Controller
         $request->validate([
             'id' => 'required',
             'image' => 'required',
-            'before' => 'required'
+
         ]);
 
         $id = $request->id;
@@ -148,5 +152,21 @@ class ImageController extends Controller
         $image->save();
 
         return response()->json(['message' => 'images add successfuly']);
+    }
+    public function deleteBeforeImage(Request $request)
+    {
+
+        $id = $request->id;
+        $image = Image::findOrFail($id);
+
+            if ($image->before) {
+                Storage::disk('public')->delete($image->before);
+                $image->before = null;
+            }
+
+
+        $image->save();
+
+        return response()->json(['message' => 'image before deleted successfully ']);
     }
 }

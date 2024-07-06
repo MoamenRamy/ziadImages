@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('/category/{id}', [CategoryController::class, 'show']); //
 
     Route::get('/imagesByCategory/{id}', [ImageController::class, 'getImagesByCategory']);
-    Route::get('/images', [ImageController::class, 'index']); //
+
+    Route::get('/images', [ImageController::class, 'index']);
+    Route::get('/allImages', [ImageController::class, 'getImagesNoPaginator']);  //
     Route::get('/image/{id}', [ImageController::class, 'show']); //
 
     Route::group(['prefix' => 'admin' , 'middleware' => ['auth:sanctum', 'admin']], function () {
@@ -37,7 +39,7 @@ use Illuminate\Support\Facades\Route;
         Route::put('/images/{id}', [ImageController::class, 'update']); //
         Route::delete('/images/{id}', [ImageController::class, 'destroy']); //
         Route::post('/updateImages', [ImageController::class, 'updateImages']);
-
+        Route::post('/deleteBeforeImage', [ImageController::class, 'deleteBeforeImage']);
     });
 
 
